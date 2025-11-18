@@ -1,0 +1,58 @@
+Export Data from DataSet
+GET
+https://api.domo.com
+/v1/datasets/{dataset_id}/data
+Export data from a DataSet in your Domo instance.
+Data types will be exported as they are currently stored in the dataset. In addition, the only supported export type is CSV.
+Request
+Security: Bearer Auth
+Path Parameters
+dataset_id
+string
+required
+Query Parameters
+fileName
+string
+The filename of the exported csv
+Examples:
+math-party.csv
+includeHeader
+boolean
+Include table header row
+Default:
+false
+Responses
+200
+Returns a raw CSV in the response body or error for the outcome of data being exported into DataSet.
+Body
+text/csv
+responses
+/
+200
+string
+Auth
+Token
+:
+Parameters
+dataset_id*
+:
+fileName
+:
+includeHeader
+:
+select an option
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/datasets/dataset_id/data \
+  --header 'Accept: text/csv' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+name,role,quote,side
+2
+Leia Organa,Rebel Leader,"Help me, Obi-Wan Kenobi. You're my only hope.",light
+3
+Qui-Gon Jinn,,,
+4
+Darth Vader,Sith Lord,I find your lack of faith disturbing.,dark

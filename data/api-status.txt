@@ -1,0 +1,6 @@
+API Status
+Check on the latest status of Domo APIs
+We maintain transparency on latest status of the Domo platform and provides APIs uptime and performance history.
+Check Current Status
+API Status
+Check on the latest status of Domo APIs

@@ -1,0 +1,128 @@
+Create an Account
+POST
+https://api.domo.com
+/v1/accounts
+When creating an Account, you must specify the Account Type properties. The Account Type properties are different, depending on the type of Account you are trying to create.
+To retrieve which Account Type properties to specify, use the GET /v1/accounts/account-types/{ACCOUNT_TYPE_ID} endpoint.
+Request
+Security: Bearer Auth
+Query Parameters
+name
+string
+The name of the Account
+type
+array
+The Account Type object indicating the type of Account
+Body
+application/json
+name
+string
+type
+object
+id
+string
+properties
+object
+Responses
+200
+Returns an Account object when successful. The returned object will not contain any properties within the Account Type object .
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+valid
+boolean
+type
+object
+id
+string
+properties
+object
+Auth
+Token
+:
+Parameters
+name
+:
+type
+:
+Body
+{
+  "name": "string",
+  "type": {
+    "id": "string",
+    "properties": {
+      "password": "string",
+      "authenticateBy": "string",
+      "url": "string",
+      "username": "string"
+    }
+  }
+}
+1
+{
+2
+  "name": "string",
+3
+  "type": {
+4
+    "id": "string",
+5
+    "properties": {
+6
+      "password": "string",
+7
+      "authenticateBy": "string",
+8
+      "url": "string",
+9
+      "username": "string"
+10
+    }
+11
+  }
+12
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/accounts \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "string",
+  "type": {
+    "id": "string",
+    "properties": {
+      "password": "string",
+      "authenticateBy": "string",
+      "url": "string",
+      "username": "string"
+    }
+  }
+}'
+Response Example
+1
+{
+2
+  "id": "string",
+3
+  "name": "string",
+4
+  "valid": true,
+5
+  "type": {
+6
+    "id": "string",
+7
+    "properties": {}
+8
+  }
+9
+}

@@ -1,0 +1,118 @@
+Retrieve Activity Log Entries
+GET
+https://api.domo.com
+/v1/audit
+Retrieves activity log entries
+Request
+Security: Bearer Auth
+Query Parameters
+start
+number
+required
+The start time(milliseconds) of when you want to receive log events
+end
+number
+The end time(milliseconds) of when you want to receive log events
+limit
+integer
+The maximum number of events you want to retrieve(default is 50, maximum of 1000)
+offset
+integer
+The offset location of events you retrieve(default is 0)
+user
+string
+The Id of the user
+Responses
+200
+HTTP/1.1 200 OK
+Content-Type: application/json
+Body
+application/json
+responses
+/
+200
+actionType
+string
+actorId
+integer
+actorName
+string
+additionalComment
+string
+browserDetails
+string
+device
+string
+eventText
+string
+ipAddress
+string
+objectId
+string
+objectName
+string
+objectType
+string
+time
+string
+userId
+string
+userName
+string
+userType
+string
+Auth
+Token
+:
+Parameters
+start*
+:
+end
+:
+limit
+:
+offset
+:
+user
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/audit \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+{
+2
+  "actionType": "VIEWED",
+3
+  "actorId": 0,
+4
+  "actorName": "",
+5
+  "additionalComment": "Leonard Euler viewed page Intro to Domo.",
+6
+  "browserDetails": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36",
+7
+  "device": "desktop",
+8
+  "eventText": "Viewed page",
+9
+  "ipAddress": "50.207.241.61",
+10
+  "objectId": "663909457",
+11
+  "objectName": "Intro to Domo",
+12
+  "objectType": "PAGE",
+13
+  "time": "2017-12-13 10:57:35 PM",
+14
+  "userId": "1619916076",
+15
+  "userName": "Leonard Euler",
+16
+  "userType": "USER"
+17
+}

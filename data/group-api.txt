@@ -1,0 +1,21 @@
+Group API
+Export
+v1.0
+API Base URL
+Domo API:https://api.domo.com
+Security
+Bearer Auth
+Provide your bearer token in the Authorization header when making requests to protected resources.
+Example: Authorization: Bearer 123
+Group objects allow you to manage a group and users associated to a group. Groups allow you to set access rights, send Buzz messages, or share content that stays consistent even when the group members may change. The API allows you to create, delete, retrieve a user or a list of users, and update user information.
+The Group Object
+Attributes
+PROPERTY NAME TYPE DESCRIPTION
+name string User's full name
+id String The ID of the group
+name String The name of the group
+default Boolean Whether the group is the default group
+active Boolean The active status of the group
+creatorId String The ID of the user who created the group
+memberCount Number The member count of the group
+userIds Array The IDs of the users in the group

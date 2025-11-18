@@ -1,0 +1,54 @@
+List Account Types
+GET
+https://api.domo.com
+/v1/account-types
+Get a list of all Account Types for which the user has permissions.
+Request
+Security: Bearer Auth
+Query Parameters
+limit
+number
+The number of Account Types to return in the list. The default is 50 and the maximum is 500.
+offset
+number
+The offset of the Account Types to begin list of Account Types within the response.
+Responses
+200
+Returns all Account Type objects that meet argument criteria from original request.
+Body
+application/json
+responses
+/
+200
+array of:
+id
+string
+name
+string
+Auth
+Token
+:
+Parameters
+limit
+:
+offset
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/account-types \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+[
+2
+  {
+3
+    "id": "string",
+4
+    "name": "string"
+5
+  }
+6
+]

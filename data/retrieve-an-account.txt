@@ -1,0 +1,63 @@
+Retrieve an Account
+GET
+https://api.domo.com
+/v1/accounts/{ACCOUNT_ID}
+Retrieves the details of an existing account.
+Request
+Security: Bearer Auth
+Path Parameters
+ACCOUNT_ID
+string
+required
+The ID of the Account
+Responses
+200
+Returns an Account object if a valid Account ID was provided. When requesting, the Account Type object will not contain any properties.
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+valid
+boolean
+type
+object
+id
+string
+properties
+object
+Auth
+Token
+:
+Parameters
+ACCOUNT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/accounts/ACCOUNT_ID \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+{
+2
+  "id": "string",
+3
+  "name": "string",
+4
+  "valid": true,
+5
+  "type": {
+6
+    "id": "string",
+7
+    "properties": {}
+8
+  }
+9
+}

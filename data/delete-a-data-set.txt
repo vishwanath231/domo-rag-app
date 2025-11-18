@@ -1,0 +1,33 @@
+Delete a DataSet
+DELETE
+https://api.domo.com
+/v1/datasets/{dataset_id}
+Permanently deletes a DataSet from your Domo instance. This can be done for all DataSets, not just those created through the API.
+Warning
+This is destructive and cannot be reversed.
+Request
+Security: Bearer Auth
+Path Parameters
+dataset_id
+string
+required
+Responses
+204
+Returns an empty response.
+Body
+application/json
+Auth
+Token
+:
+Parameters
+dataset_id*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/datasets/dataset_id \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+HTTP/1.1 204 No Content

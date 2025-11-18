@@ -1,0 +1,170 @@
+Update a page
+PUT
+https://api.domo.com
+/v1/pages/{page_id}
+Updates the specified page by providing values to parameters passed. Any parameter left out of the request will cause the specific page’s attribute to remain unchanged.
+Also, collections cannot be added or removed via this endpoint, only reordered. Giving access to a user or group will also cause that user or group to have access to the parent page (if the page is a subpage). Moving a page by updating the parentId will also cause everyone with access to the page to have access to the new parent page.
+Request
+Security: Bearer Auth
+Path Parameters
+page_id
+string
+required
+The ID of the page
+Example:
+876655018
+Body
+application/json
+name
+string
+Will update the name of the page
+owners
+array[object]
+Will update the owners of the page
+id
+integer
+type
+string
+displayName
+string
+parentId
+integer
+If provided, will either make the page a subpage or simply move the subpage to become a child of a different parent page
+locked
+boolean
+Will restrict access to edit page
+collectionIds
+array[integer]
+Collections cannot be added or removed but the order can be updated based on the order of IDs provided in the argument
+cardIds
+array[integer]
+IDs provided will add or remove cards that are not a part of a page collection
+visibility
+object
+Shares pages with users or groups
+userIds
+array[integer]
+IDs provided will share page with associated users
+groupIds
+array[integer]
+IDs provided will share page with associated groups
+Responses
+200
+Returns the parameter of success or error based on the page ID being valid.
+Auth
+Token
+:
+Parameters
+page_id*
+:
+Body
+{
+  "name": "string",
+  "owners": [
+    {
+      "id": 0,
+      "type": "string",
+      "displayName": "string"
+    }
+  ],
+  "parentId": 0,
+  "locked": true,
+  "collectionIds": [
+    0
+  ],
+  "cardIds": [
+    0
+  ],
+  "visibility": {
+    "userIds": [
+      0
+    ],
+    "groupIds": [
+      0
+    ]
+  }
+}
+1
+{
+2
+  "name": "string",
+3
+  "owners": [
+4
+    {
+5
+      "id": 0,
+6
+      "type": "string",
+7
+      "displayName": "string"
+8
+    }
+9
+  ],
+10
+  "parentId": 0,
+11
+  "locked": true,
+12
+  "collectionIds": [
+13
+    0
+14
+  ],
+15
+  "cardIds": [
+16
+    0
+17
+  ],
+18
+  "visibility": {
+19
+    "userIds": [
+20
+      0
+21
+    ],
+22
+    "groupIds": [
+23
+      0
+24
+    ]
+25
+  }
+26
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/pages/page_id \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "string",
+  "owners": [
+    {
+      "id": 0,
+      "type": "string",
+      "displayName": "string"
+    }
+  ],
+  "parentId": 0,
+  "locked": true,
+  "collectionIds": [
+    0
+  ],
+  "cardIds": [
+    0
+  ],
+  "visibility": {
+    "userIds": [
+      0
+    ],
+    "groupIds": [
+      0
+    ]
+  }
+}'

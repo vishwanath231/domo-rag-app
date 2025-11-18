@@ -1,0 +1,182 @@
+Update a Personalized Data Permission (PDP) policy
+PUT
+https://api.domo.com
+/v1/datasets/{dataset_id}/policies/{pdp_id}
+Update the specific PDP policy for a DataSet by providing values to parameters passed.
+The number of characters for the list of values for a single PDP policy, including a delimiter character for each value, must be less than 255 characters.
+Request
+Security: Bearer Auth
+Path Parameters
+dataset_id
+string
+required
+pdp_id
+string
+required
+Body
+application/json
+Name of the Policy
+name
+string
+filters
+array[object]
+column
+string
+Name of the column to filter on
+values
+array[string]
+Values to filter on
+operator
+string
+Matching operator (EQUALS)
+not
+boolean
+Determines if NOT is applied to the filter operation
+type
+string
+Type of policy (user or system)
+users
+array[integer]
+List of user IDs the policy applies to
+groups
+array[integer]
+List of group IDs the policy applies to
+Responses
+200
+Returns a subset of the DataSet object specific to the data permission policy.
+Body
+application/json
+responses
+/
+200
+id
+integer
+type
+string
+name
+string
+filters
+array[object]
+column
+string
+values
+array[string]
+operator
+string
+not
+boolean
+users
+array[integer]
+groups
+array[integer]
+Auth
+Token
+:
+Parameters
+dataset_id*
+:
+pdp_id*
+:
+Body
+{
+  "name": "Not Attending",
+  "filters": [
+    {
+      "column": "Attending",
+      "values": [
+        "TRUE"
+      ],
+      "operator": "EQUALS",
+      "not": true
+    }
+  ]
+}
+1
+{
+2
+  "name": "Not Attending",
+3
+  "filters": [
+4
+    {
+5
+      "column": "Attending",
+6
+      "values": [
+7
+        "TRUE"
+8
+      ],
+9
+      "operator": "EQUALS",
+10
+      "not": true
+11
+    }
+12
+  ]
+13
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/datasets/dataset_id/policies/pdp_id \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Not Attending",
+  "filters": [
+    {
+      "column": "Attending",
+      "values": [
+        "TRUE"
+      ],
+      "operator": "EQUALS",
+      "not": true
+    }
+  ]
+}'
+Response Example
+1
+{
+2
+  "id": 8,
+3
+  "type": "user",
+4
+  "name": "Not Attending",
+5
+  "filters": [
+6
+    {
+7
+      "column": "Attending",
+8
+      "values": [
+9
+        "TRUE"
+10
+      ],
+11
+      "operator": "EQUALS",
+12
+      "not": true
+13
+    }
+14
+  ],
+15
+  "users": [
+16
+    27
+17
+  ],
+18
+  "groups": [
+19
+    4
+20
+  ]
+21
+}

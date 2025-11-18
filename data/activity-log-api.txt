@@ -1,0 +1,27 @@
+Activity Log API
+Export
+v1.0
+API Base URL
+Domo API:https://api.domo.com
+Security
+Bearer Auth
+Provide your bearer token in the Authorization header when making requests to protected resources.
+Example: Authorization: Bearer 123
+The Activity Log API enables retrieving activity log entries from your Domo instance.
+Activity Log Entry Object
+Attributes
+PROPERTY NAME TYPE DESCRIPTION
+userName String The name of the user
+userId String The id of the user
+userType String Type of user
+actorId Long Id of proxying user if applicable
+actorName String Name of user performing the proxy if applicable
+objectName String Name of object being affected
+objectId String The ID of the object affected
+objectType String The type of object affected
+additionalComment String Description of the log entry, with additional information if applicable
+time String The time the event took place
+eventText String Text describing the main event of the log entry
+device String The device type the event came from
+browserDetails String The acting users browser details
+ipAddress String The ip address of where the event took place

@@ -1,0 +1,78 @@
+Import data into DataSet
+PUT
+https://api.domo.com
+/v1/datasets/{dataset_id}/data
+Import data into a DataSet in your Domo instance. You can replace everything or append new data.
+Request
+Security: Bearer Auth
+Path Parameters
+dataset_id
+string
+required
+Query Parameters
+updateMethod
+string
+Specifies how the data import should update the DataSet.Show all...
+Allowed values:
+REPLACE
+APPEND
+Default:
+REPLACE
+Body
+text/csv
+The schema needs to match, even when replacing.
+The only supported content type for this endpoint is CSV. However, if you use the Simple API, it will automatically convert JSON to CSV.
+The Domo specification used for representing data grids in CSV format closely follows the RFC standard for CSV (RFC-4180).
+Content-Type: text/csv
+Friend,Attending
+Isaac Newton,Yes
+Pythagoras,No
+Carl Friedrich Gauss,Yes
+Ada Lovelace,Yes
+string
+CSV data according to RFC 4180 format.
+Responses
+204
+400
+401
+403
+Success! Returns an empty response body.
+Auth
+Token
+:
+Parameters
+dataset_id*
+:
+updateMethod
+:
+select an option
+Body
+Examples
+Friend,Attending
+Isaac Newton,Yes
+Pythagoras,No
+Carl Friedrich Gauss,Yes
+Ada Lovelace,Yes
+1
+Friend,Attending
+2
+Isaac Newton,Yes
+3
+Pythagoras,No
+4
+Carl Friedrich Gauss,Yes
+5
+Ada Lovelace,Yes
+6
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/datasets/dataset_id/data \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: text/csv' \
+  --data 'Friend,Attending
+Isaac Newton,Yes
+Pythagoras,No
+Carl Friedrich Gauss,Yes
+Ada Lovelace,Yes

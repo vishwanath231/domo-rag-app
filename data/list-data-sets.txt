@@ -1,0 +1,159 @@
+List DataSets
+GET
+https://api.domo.com
+/v1/datasets
+Get a list of all DataSets in your Domo instance.
+Request
+Security: Bearer Auth
+Query Parameters
+limit
+integer
+The amount of DataSets to return in the list. The default is 50 and the maximum is 50.
+Examples:
+3
+nameLike
+string
+If included, will limit the list of DataSets to those with names that contain the string passed in. nameLike is case insensitive.
+offset
+integer
+The offset of the DataSet ID to begin list of users within the response.
+Examples:
+0
+sort
+string
+The order to return the DataSets in.
+Allowed values:
+name
+nameDescending
+lastTouched
+lastTouchedAscending
+lastUpdated
+lastUpdatedAscending
+createdAt
+createdAtAscending
+cardCount
+cardCountAscending
+cardViewCount
+cardViewCountAscending
+errorState
+errorStateDescending
+dataSourceId
+Example:
+createdAt
+Responses
+200
+Returns all DataSet objects that meet argument criteria from original request.
+Body
+application/json
+responses
+/
+200
+array of:
+id
+string
+name
+string
+rows
+integer
+columns
+integer
+createdAt
+string
+updatedAt
+string
+description
+string
+Auth
+Token
+:
+Parameters
+limit
+:
+nameLike
+:
+offset
+:
+sort
+:
+select an option
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/datasets \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined'
+Response Example
+1
+[
+2
+  {
+3
+    "id": "08a061e2-12a2-4646-b4bc-20beddb403e3",
+4
+    "name": "Questions regarding Euclid's Fundamental Theorem of Arithmetic",
+5
+    "rows": 1,
+6
+    "columns": 6,
+7
+    "createdAt": "2015-12-10T07:06:14Z",
+8
+    "updatedAt": "2016-02-29T20:56:20.567Z"
+9
+  },
+10
+  {
+11
+    "id": "317970a1-6a6e-4f70-8e09-44cf5f34cf44",
+12
+    "name": "Ideas Regarding Physics",
+13
+    "description": "Notes",
+14
+    "rows": 1289280,
+15
+    "columns": 9,
+16
+    "createdAt": "2013-09-24T20:51:48Z",
+17
+    "updatedAt": "2016-02-29T20:56:07.619Z"
+18
+  },
+19
+  {
+20
+    "id": "cc22901d-c856-47c5-89a3-5228a4fa5663",
+21
+    "name": "Rene Descartes Mentions",
+22
+    "description": "",
+23
+    "rows": 194723231,
+24
+    "columns": 12,
+25
+    "createdAt": "2014-05-01T22:01:17Z",
+26
+    "updatedAt": "2016-02-29T20:56:05.034Z"
+27
+  },
+28
+  {
+29
+    "id": "36ea3481-5b90-4181-a4a8-4d9388e85d9e",
+30
+    "name": "Symbolic Logic",
+31
+    "description": "",
+32
+    "rows": 349660,
+33
+    "columns": 12,
+34
+    "createdAt": "2014-11-26T18:29:09Z",
+35
+    "updatedAt": "2016-02-29T20:55:50.337Z"
+36
+  }
+37
+]

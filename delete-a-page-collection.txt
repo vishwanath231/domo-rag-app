@@ -1,0 +1,32 @@
+Delete a page collection
+DELETE
+https://api.domo.com
+/v1/pages/{page_id}/collections/{page_collection_id}
+Permanently deletes a page collection from your Domo instance.
+Warning
+This is destructive and cannot be reversed.
+Request
+Security: Bearer Auth
+Path Parameters
+page_collection_id
+integer
+required
+page_id
+integer
+required
+Responses
+204
+Returns the parameter of success or error based on the page collection ID being valid.
+Auth
+Token
+:
+Parameters
+page_collection_id*
+:
+page_id*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/pages/page_id/collections/page_collection_id \
+  --header 'Authorization: Bearer undefined'

@@ -1,0 +1,186 @@
+Create a DataSet
+POST
+https://api.domo.com
+/v1/datasets
+Creates a new DataSet in your Domo instance. Once a DataSet has been created, data can be imported into the DataSet.
+Request
+Security: Bearer Auth
+Body
+application/json
+name
+string
+required
+Name of the DataSet to create
+description
+string
+Description of DataSet to create
+schema
+object
+required
+The current schema associated with this DataSet
+columns
+array[object]
+required
+Array of columns in the DataSet
+Responses
+201
+Returns a DataSet object when successful. The returned object will have DataSet attributes based on the information provided when the DataSet was created.
+Body
+application/json
+responses
+/
+201
+id
+string
+name
+string
+description
+string
+rows
+integer
+columns
+integer
+schema
+object
+columns
+array[object]
+owner
+object
+id
+integer
+name
+string
+createdAt
+string
+updatedAt
+string
+Auth
+Token
+:
+Body
+{
+  "name": "Leonhard Euler Party",
+  "description": "Mathematician Guest List",
+  "rows": 0,
+  "schema": {
+    "columns": [
+      {
+        "type": "STRING",
+        "name": "Friend"
+      },
+      {
+        "type": "STRING",
+        "name": "Attending"
+      }
+    ]
+  }
+}
+1
+{
+2
+  "name": "Leonhard Euler Party",
+3
+  "description": "Mathematician Guest List",
+4
+  "rows": 0,
+5
+  "schema": {
+6
+    "columns": [
+7
+      {
+8
+        "type": "STRING",
+9
+        "name": "Friend"
+10
+      },
+11
+      {
+12
+        "type": "STRING",
+13
+        "name": "Attending"
+14
+      }
+15
+    ]
+16
+  }
+17
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/datasets \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Leonhard Euler Party",
+  "description": "Mathematician Guest List",
+  "rows": 0,
+  "schema": {
+    "columns": [
+      {
+        "type": "STRING",
+        "name": "Friend"
+      },
+      {
+        "type": "STRING",
+        "name": "Attending"
+      }
+    ]
+  }
+}'
+Response Example
+1
+{
+2
+  "id": "4405ff58-1957-45f0-82bd-914d989a3ea3",
+3
+  "name": "Leonhard Euler Party",
+4
+  "description": "Mathematician Guest List",
+5
+  "rows": 0,
+6
+  "columns": 0,
+7
+  "schema": {
+8
+    "columns": [
+9
+      {
+10
+        "type": "STRING",
+11
+        "name": "Friend"
+12
+      },
+13
+      {
+14
+        "type": "STRING",
+15
+        "name": "Attending"
+16
+      }
+17
+    ]
+18
+  },
+19
+  "owner": {
+20
+    "id": 27,
+21
+    "name": "DomoSupport"
+22
+  },
+23
+  "createdAt": "2016-06-21T17:20:36Z",
+24
+  "updatedAt": "2016-06-21T17:20:36Z"
+25
+}

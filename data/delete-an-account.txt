@@ -1,0 +1,28 @@
+Delete an Account
+DELETE
+https://api.domo.com
+/v1/accounts/{ACCOUNT_ID}
+Deletes an Account from your Domo instance.
+Warning
+This is destructive and cannot be reversed.
+Request
+Security: Bearer Auth
+Path Parameters
+ACCOUNT_ID
+string
+required
+The ID of the Account
+Responses
+200
+Returns an empty response.
+Auth
+Token
+:
+Parameters
+ACCOUNT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/accounts/ACCOUNT_ID \
+  --header 'Authorization: Bearer undefined'

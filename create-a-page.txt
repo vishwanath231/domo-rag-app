@@ -1,0 +1,204 @@
+Create a page
+POST
+https://api.domo.com
+/v1/pages
+Creates a new page in your Domo instance.
+Request
+Security: Bearer Auth
+Body
+application/json
+name
+string
+The name of the page
+parentId
+integer
+If provided, the page will be created as a subpage to the page provided
+locked
+boolean
+will restrict other users the ability to make edits to page or its content - the default value is false
+cardIds
+array[integer]
+The IDs of all cards to be added to the page
+visibility
+object
+Determines the access given to both individual users or groups within Domo
+userIds
+array[integer]
+The IDs of users that will be given access to view the page
+groupIds
+array[integer]
+The IDs of groups that will be given access to view the page
+Responses
+200
+Returns a page object when successful.
+Body
+application/json
+responses
+/
+200
+id
+integer
+parentId
+integer
+owners
+array[object]
+id
+integer
+type
+string
+displayName
+string
+name
+string
+locked
+boolean
+cardIds
+array[integer]
+visibility
+object
+userIds
+array[integer]
+groupIds
+array[integer]
+Auth
+Token
+:
+Body
+{
+  "name": "string",
+  "parentId": 0,
+  "locked": true,
+  "cardIds": [
+    0
+  ],
+  "visibility": {
+    "userIds": [
+      0
+    ],
+    "groupIds": [
+      0
+    ]
+  }
+}
+1
+{
+2
+  "name": "string",
+3
+  "parentId": 0,
+4
+  "locked": true,
+5
+  "cardIds": [
+6
+    0
+7
+  ],
+8
+  "visibility": {
+9
+    "userIds": [
+10
+      0
+11
+    ],
+12
+    "groupIds": [
+13
+      0
+14
+    ]
+15
+  }
+16
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/pages \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "string",
+  "parentId": 0,
+  "locked": true,
+  "cardIds": [
+    0
+  ],
+  "visibility": {
+    "userIds": [
+      0
+    ],
+    "groupIds": [
+      0
+    ]
+  }
+}'
+Response Example
+1
+{
+2
+  "id": 3242,
+3
+  "parentId": 23,
+4
+  "owners": [
+5
+    {
+6
+      "id": 8811501,
+7
+      "type": "USER",
+8
+      "displayName": "John Smith"
+9
+    }
+10
+  ],
+11
+  "name": "Supply Chain",
+12
+  "locked": true,
+13
+  "cardIds": [
+14
+    12,
+15
+    2535,
+16
+    233,
+17
+    694
+18
+  ],
+19
+  "visibility": {
+20
+    "userIds": [
+21
+      793,
+22
+      20,
+23
+      993,
+24
+      19234
+25
+    ],
+26
+    "groupIds": [
+27
+      32,
+28
+      25,
+29
+      17,
+30
+      74
+31
+    ]
+32
+  }
+33
+}

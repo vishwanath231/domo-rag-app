@@ -1,0 +1,52 @@
+Update a group
+PUT
+https://api.domo.com
+/v1/groups/{group_id}
+Updates the specified group by providing values to parameters passed. Any parameter left out of the request will cause the specific group’s attribute to remain unchanged.
+Request
+Security: Bearer Auth
+Path Parameters
+group_id
+string
+required
+Body
+application/json
+name
+string
+The name of the group
+active
+boolean
+If the group is active
+Responses
+200
+Returns the parameter of success or error based on the group ID being valid.
+HTTP/1.1 200 OK
+Auth
+Token
+:
+Parameters
+group_id*
+:
+Body
+{
+  "name": "Groupy McGroup",
+  "active": true
+}
+1
+{
+2
+  "name": "Groupy McGroup",
+3
+  "active": true
+4
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/groups/group_id \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Groupy McGroup",
+  "active": true
+}'

@@ -1,0 +1,35 @@
+Get Drill Properties
+GET
+https://api.domo.com
+/v1/cards/chart/{cardUrn}/drillpath
+Retrieves drill views of a Card.
+Request
+Security: OAuth 2.0
+Path Parameters
+cardUrn
+string
+required
+ID of Card
+Responses
+200
+403
+409
+OK
+Body
+*/*
+allowTableDrill
+boolean or null
+drillOrder
+array[string] or null
+Auth
+Token
+:
+Parameters
+cardUrn*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/cards/chart/cardUrn/drillpath \
+  --header 'Accept: */*' \
+  --header 'Authorization: '

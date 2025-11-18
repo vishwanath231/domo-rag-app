@@ -1,0 +1,28 @@
+Delete a group
+DELETE
+https://api.domo.com
+/v1/groups/{group_id}
+Permanently deletes a group from your Domo instance.
+Warning
+This is destructive and cannot be reversed.
+Request
+Security: Bearer Auth
+Path Parameters
+group_id
+string
+required
+Responses
+204
+Returns the parameter of success or error based on the group ID being valid.
+HTTP/1.1 204 No Content
+Auth
+Token
+:
+Parameters
+group_id*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/groups/group_id \
+  --header 'Authorization: Bearer undefined'
