@@ -39,4 +39,4 @@ async function scrapeUsingHeadlessSelenium(url) {
   }
 }
 
-scrapeUsingHeadlessSelenium("https://developer.domo.com/portal/7162ed588aa08-sample-projects");
+scrapeUsingHeadlessSelenium("https://developer.domo.com/portal/kspv2orr3oi30-workflows-product-api");

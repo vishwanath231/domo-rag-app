@@ -1,0 +1,1922 @@
+Projects and Tasks API
+Export
+v1.0
+API Base URL
+Domo API:https://api.domo.com
+Security
+Bearer Auth
+Provide your bearer token in the Authorization header when making requests to protected resources.
+Example: Authorization: Bearer 123
+“Projects and Tasks” is a project management tool that helps you take real action with simple planning, assigning, and task-tracking features. You can create projects with various tasks and assignments. Those tasks exist within swim lanes or lists, and can be moved from list to list to show progress through a particular workflow. You can use default lists or create new custom lists. You can also add attachments to individual tasks to reference relevant materials and other artifacts.
+Note
+You will need to ensure that your client application has access to the Workflow scope in order to access the Projects and Tasks endpoints.
+The project object
+Attributes
+PROPERTY NAME TYPE DESCRIPTION
+name String The name of the project
+id String The ID of the project
+members Long The ID's of the members of the project
+createdBy Long The ID of the user who created the project
+createdDate Date Date the project was created
+public Boolean whether or not the project is a public project
+description String Description of the project
+dueDate Date Due date of the project
+The list object
+Attributes
+PROPERTY NAME TYPE DESCRIPTION
+name String The name of the List.
+id String The ID of the List.
+type String The type of List (i.e. TODO, WORKING_ON, COMPLETED).
+index Long The ordered index of the list within the project.
+The task object
+Attributes
+PROPERTY NAME TYPE DESCRIPTION
+id String The ID of the task.
+projectId String The ID of the project that the task belongs to.
+projectListId tring The ID of the list within a project that the task belongs to.
+taskName String The name of the task.
+description String An optional description of the task.
+createdDate ate The date the task was created.
+dueDate Date The date the task is expected to be completed.
+priority Long The prioritized order of the task in a list.
+createdBy Long The ID of the Domo user that created the task.
+ownedBy Long The ID of the Domo user that owns the task.
+contributors Long An array of user IDs that are assigned as contributors to the task.
+attachmentCount Long The number of attachments that task has.
+tags String An array of tags that have been assigned to the task.
+archived Boolean Whether or not the task has been archived.
+Retrieve all projects
+GET
+https://api.domo.com
+/v1/projects
+Retrieves a list of all projects that the client scope has access to.
+Responses
+200
+Returns an array of project objects.
+Body
+application/json
+array of:
+id
+string
+name
+string
+members
+array[integer]
+createdBy
+integer
+createdDate
+string
+public
+boolean
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects \
+  --header 'Accept: application/json'
+Response Example
+1
+[
+2
+  {
+3
+    "id": "3",
+4
+    "name": "Agile Project",
+5
+    "members": [
+6
+      27,
+7
+      35,
+8
+      102
+9
+    ],
+10
+    "createdBy": 27,
+11
+    "createdDate": "2018-08-01T01:00:00Z",
+12
+    "public": false
+13
+  },
+14
+  {
+15
+    "id": "2",
+16
+    "name": "Final Deliverable Progress",
+17
+    "members": [
+18
+      1,
+19
+      27,
+20
+      150
+21
+    ],
+22
+    "createdBy": 1,
+23
+    "createdDate": "2018-08-01T04:00:00Z",
+24
+    "public": true
+25
+  }
+26
+]
+Create a project
+POST
+https://api.domo.com
+/v1/projects
+Create a new project in your Domo instance
+Request
+Query Parameters
+members
+integer
+required
+Array of user ID's that will be assigned as members of the project
+name
+string
+required
+The name of the project
+public
+boolean
+required
+Whether or not the project should be publicly available to other Domo users
+description
+string
+Description of the project
+dueDate
+string
+Due date of the project
+Body
+application/json
+The request body accepts a project object.
+name
+string
+members
+array[integer]
+public
+string
+Responses
+200
+Returns a project object when successful.
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+members
+array[integer]
+createdBy
+integer
+createdDate
+string
+public
+boolean
+Parameters
+members*
+:
+name*
+:
+public*
+:
+select an option
+description
+:
+dueDate
+:
+Body
+{
+  "name": "Scrum Project",
+  "members": [
+    27,
+    105
+  ],
+  "public": "TRUE"
+}
+1
+{
+2
+  "name": "Scrum Project",
+3
+  "members": [
+4
+    27,
+5
+    105
+6
+  ],
+7
+  "public": "TRUE"
+8
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/projects \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Scrum Project",
+  "members": [
+    27,
+    105
+  ],
+  "public": "TRUE"
+}'
+Response Example
+1
+{
+2
+  "id": "4",
+3
+  "name": "Scrum Project",
+4
+  "members": [
+5
+    27,
+6
+    105
+7
+  ],
+8
+  "createdBy": 27,
+9
+  "createdDate": "2018-08-01T05:00:00Z",
+10
+  "public": true
+11
+}
+Sample Projects
+Retrieve individual project
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}
+Retrieves the details of an individual existing project given a project id.
+Use the special project ID me to return your personal project.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+ID of the project
+Responses
+200
+Returns a project object.
+Body
+application/json
+id
+string
+name
+string
+members
+array[integer]
+createdBy
+integer
+createdDate
+string
+public
+boolean
+Parameters
+PROJECT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID \
+  --header 'Accept: application/json'
+Response Example
+1
+{
+2
+  "id": "3",
+3
+  "name": "Agile Project",
+4
+  "members": [
+5
+    27,
+6
+    35,
+7
+    102
+8
+  ],
+9
+  "createdBy": 27,
+10
+  "createdDate": "2018-08-01T01:00:00Z",
+11
+  "public": false
+12
+}
+Update a project
+PUT
+https://api.domo.com
+/v1/projects/{PROJECT_ID}
+Updates attributes of an existing project in your Domo instance. The following properties are read-only and cannot be updated with this request:
+id
+members
+createdBy
+createdDate
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+ID of the project
+Query Parameters
+description
+string
+Updates the description of the project
+dueDate
+string
+Updates the due date of the project
+name
+string
+Updates the name of the project
+public
+boolean
+Updates whether or not the project is publicly available to Domo users
+Body
+application/json
+The request body accepts a project object.
+name
+string
+Responses
+200
+Returns the updated project object.
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+members
+array[integer]
+createdBy
+integer
+createdDate
+string
+public
+boolean
+Parameters
+PROJECT_ID*
+:
+description
+:
+dueDate
+:
+name
+:
+public
+:
+select an option
+Body
+{
+  "name": "Scrum Project for Q4"
+}
+1
+{
+2
+  "name": "Scrum Project for Q4"
+3
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/projects/PROJECT_ID \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Scrum Project for Q4"
+}'
+Response Example
+1
+{
+2
+  "id": "4",
+3
+  "name": "Scrum Project for Q4",
+4
+  "members": [
+5
+    27,
+6
+    105
+7
+  ],
+8
+  "createdBy": 27,
+9
+  "createdDate": "2018-08-01T05:00:00Z",
+10
+  "public": true
+11
+}
+Delete a project
+DELETE
+https://api.domo.com
+/v1/projects/{PROJECT_ID}
+Permanently deletes a project from your Domo instance.
+Warning
+This is destructive and cannot be reversed.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+ID of the project
+Responses
+200
+Returns the parameter of success or error based on the project ID being valid.
+Parameters
+PROJECT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/projects/PROJECT_ID
+Delete an attachment
+DELETE
+https://api.domo.com
+/v1/project/{PROJECT_ID}/tasks/{TASK_ID}/attachments/{ATTACHMENT_ID}
+Permanently deletes an attachment from your task.
+Warning
+This is destructive and cannot be reversed.
+Request
+Path Parameters
+ATTACHMENT_ID
+string
+required
+The ID of the attachment to be deleted
+PROJECT_ID
+string
+required
+The ID of the project that the attachment belongs to
+TASK_ID
+string
+required
+The ID of the task that the attachment belongs to
+Responses
+200
+Returns the parameter of success or error based on the attachment ID being valid.
+Parameters
+ATTACHMENT_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/project/PROJECT_ID/tasks/TASK_ID/attachments/ATTACHMENT_ID
+Retrieve project members
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/members
+Retrieves a list of ids of the users that are members of the given project id.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+The ID of the project
+Responses
+200
+Returns an array of member ids.
+Body
+application/json
+array[integer]
+Parameters
+PROJECT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/members \
+  --header 'Accept: application/json'
+Response Example
+1
+[
+2
+  27,
+3
+  35,
+4
+  102
+5
+]
+Update project members
+PUT
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/members
+Update the members of a given project id.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+The ID of the project
+Body
+application/json
+The request body accepts an array of member ids.
+array[integer]
+Responses
+200
+OK
+Parameters
+PROJECT_ID*
+:
+Body
+[
+  27,
+  105,
+  93,
+  84,
+  107
+]
+1
+[
+2
+  27,
+3
+  105,
+4
+  93,
+5
+  84,
+6
+  107
+7
+]
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/members \
+  --header 'Content-Type: application/json' \
+  --data '[
+  27,
+  105,
+  93,
+  84,
+  107
+]'
+Create a list
+POST
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists
+Creates a new list within the given project id.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+The ID of the project
+Query Parameters
+name
+string
+required
+The name of the List
+type
+string
+required
+The type of List (i.e. TODO, WORKING_ON, COMPLETED)
+index
+integer
+The ordered index of the list within the project. Setting this property will re-order other lists in the project to maintain sequential order. Leaving this property blank will default the index to 1 and shift the index of all other lists.
+Body
+application/json
+The request body accepts a list object.
+name
+string
+type
+string
+index
+integer
+Responses
+200
+Returns a list object when successful.
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+type
+string
+index
+integer
+Parameters
+PROJECT_ID*
+:
+name*
+:
+type*
+:
+index
+:
+Body
+{
+  "name": "Needs Validation",
+  "type": "TODO",
+  "index": 3
+}
+1
+{
+2
+  "name": "Needs Validation",
+3
+  "type": "TODO",
+4
+  "index": 3
+5
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Needs Validation",
+  "type": "TODO",
+  "index": 3
+}'
+Response Example
+1
+{
+2
+  "id": "13",
+3
+  "name": "Needs Validation",
+4
+  "type": "TODO",
+5
+  "index": 3
+6
+}
+Retrieve Individual List
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}
+Retrieves the details of an individual list given a project id and a list id.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+Responses
+200
+Returns a list object.
+Body
+application/json
+id
+string
+name
+string
+type
+string
+index
+integer
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID \
+  --header 'Accept: application/json'
+Response Example
+1
+{
+2
+  "id": "4",
+3
+  "name": "To Do",
+4
+  "type": "TODO",
+5
+  "index": 1
+6
+}
+Update a list
+PUT
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}
+Update the details of a list given an existing project id and list id.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+Query Parameters
+index
+integer
+required
+The updated index of the list within the project. Updating the index of a list may also change the order of the other lists in the project to remain sequential.
+name
+string
+required
+Updated name of the list
+type
+string
+required
+One of the following strings TODO, WORKING_ON, COMPLETED.
+Body
+application/json
+The request body accepts a list object.
+name
+string
+type
+string
+index
+integer
+Responses
+200
+Returns the updated list object.
+Body
+application/json
+responses
+/
+200
+id
+string
+name
+string
+type
+string
+index
+integer
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+index*
+:
+name*
+:
+type*
+:
+Body
+{
+  "name": "Needs QA",
+  "type": "TODO",
+  "index": 3
+}
+1
+{
+2
+  "name": "Needs QA",
+3
+  "type": "TODO",
+4
+  "index": 3
+5
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Needs QA",
+  "type": "TODO",
+  "index": 3
+}'
+Response Example
+1
+{
+2
+  "id": "13",
+3
+  "name": "Needs QA",
+4
+  "type": "TODO",
+5
+  "index": 3
+6
+}
+Delete a list
+DELETE
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}
+Permanently deletes a list from your Domo instance.
+Warning
+This is destructive and cannot be reversed.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+Responses
+200
+Returns the parameter of success or error based on the project ID and list ID being valid.
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request DELETE \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID
+Retrieve all project tasks
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/tasks?offset={OFFSET}&limit={LIMIT}
+Retrieves all tasks from a given project id.
+Request
+Path Parameters
+PROJECT_ID
+string
+required
+The ID of the project
+LIMIT
+integer
+he number of records to offset from the beginning of the result list (defaults to 0)
+OFFSET
+integer
+The maximum amount of results to return (defaults to 10 with a maximum of 50)
+Responses
+200
+Returns an array of task objects.
+Body
+application/json
+responses
+/
+200
+array of:
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+createdDate
+string
+priority
+integer
+createdBy
+integer
+ownedBy
+integer
+contributors
+array[integer]
+attachmentCount
+integer
+tags
+array[object]
+archived
+boolean
+Parameters
+PROJECT_ID*
+:
+LIMIT
+:
+OFFSET
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url 'https://api.domo.com/v1/projects/PROJECT_ID/tasks?offset=OFFSET&limit=LIMIT' \
+  --header 'Accept: application/json'
+Response Example
+1
+[
+2
+  {
+3
+    "id": "1",
+4
+    "projectId": "2",
+5
+    "projectListId": "4",
+6
+    "taskName": "User Story Mapping",
+7
+    "createdDate": "2018-08-01T07:00:00Z",
+8
+    "priority": 1,
+9
+    "createdBy": 27,
+10
+    "ownedBy": 27,
+11
+    "contributors": [
+12
+      27
+13
+    ],
+14
+    "attachmentCount": 0,
+15
+    "tags": [],
+16
+    "archived": false
+17
+  },
+18
+  {
+19
+    "id": "2",
+20
+    "projectId": "2",
+21
+    "projectListId": "4",
+22
+    "taskName": "UML Architecture",
+23
+    "createdDate": "2018-08-01T07:00:00Z",
+24
+    "priority": 2,
+25
+    "createdBy": 27,
+26
+    "ownedBy": 27,
+27
+    "contributors": [
+28
+      27
+29
+    ],
+30
+    "attachmentCount": 0,
+31
+    "tags": [],
+32
+    "archived": false
+33
+  },
+34
+  {
+35
+    "id": "3",
+36
+    "projectId": "2",
+37
+    "projectListId": "4",
+38
+    "taskName": "Project Scaffolding",
+39
+    "createdDate": "2018-08-01T07:00:00Z",
+40
+    "priority": 3,
+41
+    "createdBy": 27,
+42
+    "ownedBy": 27,
+43
+    "contributors": [
+44
+      27
+45
+    ],
+46
+    "attachmentCount": 0,
+47
+    "tags": [],
+48
+    "archived": false
+49
+  },
+50
+  {
+51
+    "id": "4",
+52
+    "projectId": "2",
+53
+    "projectListId": "14",
+54
+    "taskName": "Initial Commit",
+55
+    "createdDate": "2018-08-01T07:00:00Z",
+56
+    "priority": 1,
+57
+    "createdBy": 27,
+58
+    "ownedBy": 27,
+59
+    "contributors": [
+60
+      27
+61
+    ],
+62
+    "attachmentCount": 0,
+63
+    "tags": [],
+64
+    "archived": false
+65
+  }
+66
+]
+Retrieve all List tasks
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks?offset={OFFSET}&limit={LIMIT}
+Retrieves all tasks from a given project id and list id.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+LIMIT
+integer
+The number of records to offset from the beginning of the result list (defaults to 0)
+OFFSET
+integer
+The maximum amount of results to return (defaults to 10 with a maximum of 50)
+Responses
+200
+Returns an array of task objects.
+Body
+application/json
+responses
+/
+200
+array of:
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+createdDate
+string
+priority
+integer
+createdBy
+integer
+ownedBy
+integer
+contributors
+array[integer]
+attachmentCount
+integer
+tags
+array[object]
+archived
+boolean
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+LIMIT
+:
+OFFSET
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url 'https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks?offset=OFFSET&limit=LIMIT' \
+  --header 'Accept: application/json'
+Response Example
+1
+[
+2
+  {
+3
+    "id": "1",
+4
+    "projectId": "2",
+5
+    "projectListId": "4",
+6
+    "taskName": "User Story Mapping",
+7
+    "createdDate": "2018-08-01T07:00:00Z",
+8
+    "priority": 1,
+9
+    "createdBy": 27,
+10
+    "ownedBy": 27,
+11
+    "contributors": [
+12
+      27
+13
+    ],
+14
+    "attachmentCount": 0,
+15
+    "tags": [],
+16
+    "archived": false
+17
+  },
+18
+  {
+19
+    "id": "2",
+20
+    "projectId": "2",
+21
+    "projectListId": "4",
+22
+    "taskName": "UML Architecture",
+23
+    "createdDate": "2018-08-01T07:00:00Z",
+24
+    "priority": 2,
+25
+    "createdBy": 27,
+26
+    "ownedBy": 27,
+27
+    "contributors": [
+28
+      27
+29
+    ],
+30
+    "attachmentCount": 0,
+31
+    "tags": [],
+32
+    "archived": false
+33
+  },
+34
+  {
+35
+    "id": "3",
+36
+    "projectId": "2",
+37
+    "projectListId": "4",
+38
+    "taskName": "Project Scaffolding",
+39
+    "createdDate": "2018-08-01T07:00:00Z",
+40
+    "priority": 3,
+41
+    "createdBy": 27,
+42
+    "ownedBy": 27,
+43
+    "contributors": [
+44
+      27
+45
+    ],
+46
+    "attachmentCount": 0,
+47
+    "tags": [],
+48
+    "archived": false
+49
+  }
+50
+]
+Retrieve individual task
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks/{TASK_ID}
+Retrieves an individual task from a given project id and list id.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+TASK_ID
+string
+required
+The ID of the task
+Responses
+200
+Returns a task object.
+Body
+application/json
+responses
+/
+200
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+createdDate
+string
+updatedDate
+string
+priority
+integer
+createdBy
+integer
+ownedBy
+integer
+contributors
+array[integer]
+attachmentCount
+integer
+tags
+array[object]
+archived
+boolean
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks/TASK_ID \
+  --header 'Accept: application/json'
+Response Example
+1
+{
+2
+  "id": "3",
+3
+  "projectId": "2",
+4
+  "projectListId": "4",
+5
+  "taskName": "Project Scaffolding",
+6
+  "createdDate": "2018-08-01T07:00:00Z",
+7
+  "updatedDate": "2018-08-01T07:00:00Z",
+8
+  "priority": 3,
+9
+  "createdBy": 27,
+10
+  "ownedBy": 27,
+11
+  "contributors": [
+12
+    27
+13
+  ],
+14
+  "attachmentCount": 0,
+15
+  "tags": [],
+16
+  "archived": false
+17
+}
+Update a Task
+PUT
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks/{TASK_ID}
+Update the details of a task given an existing project id, list id, and task id.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+TASK_ID
+string
+required
+The ID of the task
+Query Parameters
+contributors
+string
+An array of user IDs that are assigned as contributors to the task
+description
+string
+An optional description of the task
+dueDate
+string
+The date the task is expected to be completed
+ownedBy
+string
+The ID of the Domo user that owns the task
+priority
+string
+Priority of task within a list. Setting this property will impact the index of other tasks in the list to maintain sequential order.
+tags
+string
+An array of tags that have been assigned to the task
+taskName
+string
+The name of the task
+Body
+application/json
+The request body accepts a task object.
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+priority
+integer
+contributors
+array[integer]
+tags
+array[object]
+archived
+boolean
+Responses
+200
+Returns the updated task object.
+Body
+application/json
+responses
+/
+200
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+createdDate
+string
+updatedDate
+string
+priority
+integer
+createdBy
+integer
+ownedBy
+integer
+contributors
+array[integer]
+attachmentCount
+integer
+tags
+array[object]
+archived
+boolean
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+contributors
+:
+description
+:
+dueDate
+:
+ownedBy
+:
+priority
+:
+tags
+:
+taskName
+:
+Body
+{
+  "id": "3",
+  "projectId": "2",
+  "projectListId": "4",
+  "taskName": "Project Scaffolding and Infrastructure",
+  "priority": 3,
+  "contributors": [
+    27
+  ],
+  "tags": [],
+  "archived": false
+}
+1
+{
+2
+  "id": "3",
+3
+  "projectId": "2",
+4
+  "projectListId": "4",
+5
+  "taskName": "Project Scaffolding and Infrastructure",
+6
+  "priority": 3,
+7
+  "contributors": [
+8
+    27
+9
+  ],
+10
+  "tags": [],
+11
+  "archived": false
+12
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks/TASK_ID \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "id": "3",
+  "projectId": "2",
+  "projectListId": "4",
+  "taskName": "Project Scaffolding and Infrastructure",
+  "priority": 3,
+  "contributors": [
+    27
+  ],
+  "tags": [],
+  "archived": false
+}'
+Response Example
+1
+{
+2
+  "id": "3",
+3
+  "projectId": "2",
+4
+  "projectListId": "4",
+5
+  "taskName": "Project Scaffolding and Infrastructure",
+6
+  "createdDate": "2018-08-01T07:00:00Z",
+7
+  "updatedDate": "2018-08-01T08:00:00Z",
+8
+  "priority": 3,
+9
+  "createdBy": 27,
+10
+  "ownedBy": 27,
+11
+  "contributors": [
+12
+    27
+13
+  ],
+14
+  "attachmentCount": 0,
+15
+  "tags": [],
+16
+  "archived": false
+17
+}
+Create a task
+PUT
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks
+Add a task to a project list.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list within a project that the task belongs to
+PROJECT_ID
+string
+required
+The ID of the project that the task belongs to
+Query Parameters
+taskName
+string
+required
+The name of the task
+contributors
+integer
+An array of user IDs that are assigned as contributors to the task
+description
+string
+An optional description of the task
+dueDate
+string
+The date the task is expected to be completed
+ownedBy
+integer
+The ID of the Domo user that owns the task
+priority
+integer
+Priority of task within a list. Setting this property will impact the index of other tasks in the list to maintain sequential order. If not provided the priority will default to 1 and the index of all the other tasks in the list will shift.
+tags
+string
+An array of tags that have been assigned to the task
+Body
+application/json
+The request body accepts a task object.
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+priority
+integer
+contributors
+array[integer]
+tags
+array[object]
+archived
+boolean
+Responses
+200
+Returns the task object.
+Body
+application/json
+responses
+/
+200
+id
+string
+projectId
+string
+projectListId
+string
+taskName
+string
+createdDate
+string
+updatedDate
+string
+priority
+integer
+createdBy
+integer
+ownedBy
+integer
+contributors
+array[integer]
+attachmentCount
+integer
+tags
+array[object]
+archived
+boolean
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+taskName*
+:
+contributors
+:
+description
+:
+dueDate
+:
+ownedBy
+:
+priority
+:
+tags
+:
+Body
+{
+  "id": "3",
+  "projectId": "2",
+  "projectListId": "4",
+  "taskName": "Business Plan Review",
+  "priority": 3,
+  "contributors": [
+    27
+  ],
+  "tags": [],
+  "archived": false
+}
+1
+{
+2
+  "id": "3",
+3
+  "projectId": "2",
+4
+  "projectListId": "4",
+5
+  "taskName": "Business Plan Review",
+6
+  "priority": 3,
+7
+  "contributors": [
+8
+    27
+9
+  ],
+10
+  "tags": [],
+11
+  "archived": false
+12
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "id": "3",
+  "projectId": "2",
+  "projectListId": "4",
+  "taskName": "Business Plan Review",
+  "priority": 3,
+  "contributors": [
+    27
+  ],
+  "tags": [],
+  "archived": false
+}'
+Response Example
+1
+{
+2
+  "id": "5",
+3
+  "projectId": "2",
+4
+  "projectListId": "4",
+5
+  "taskName": "Business Plan Review",
+6
+  "createdDate": "2018-08-01T08:00:00Z",
+7
+  "updatedDate": "2018-08-01T08:00:00Z",
+8
+  "priority": 3,
+9
+  "createdBy": 27,
+10
+  "ownedBy": 27,
+11
+  "contributors": [
+12
+    27
+13
+  ],
+14
+  "attachmentCount": 0,
+15
+  "tags": [],
+16
+  "archived": false
+17
+}
+Retrieve list of attachments
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks/{TASK_ID}/attachments
+Retrieve details about all of the attachments belonging to a particular task.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+TASK_ID
+string
+required
+The ID of the task
+Responses
+200
+Returns an array of attachment objects.
+Body
+application/json
+responses
+/
+200
+array of:
+id
+integer
+taskId
+integer
+createdDate
+string
+createdBy
+integer
+fileName
+string
+mimeType
+string
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks/TASK_ID/attachments \
+  --header 'Accept: application/json'
+Response Example
+1
+[
+2
+  {
+3
+    "id": 2,
+4
+    "taskId": 5,
+5
+    "createdDate": "2018-08-01T09:00:00Z",
+6
+    "createdBy": 27,
+7
+    "fileName": "dataflows.csv",
+8
+    "mimeType": "text/csv"
+9
+  },
+10
+  {
+11
+    "id": 1,
+12
+    "taskId": 5,
+13
+    "createdDate": "2018-08-01T09:00:00Z",
+14
+    "createdBy": 27,
+15
+    "fileName": "logo.png",
+16
+    "mimeType": "image/png"
+17
+  }
+18
+]
+Add attachment
+POST
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks/{TASK_ID}/attachments
+Add a multipart form file to a task item as an attachment.
+Request
+Path Parameters
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+TASK_ID
+string
+required
+The ID of the task
+Responses
+200
+Returns the attachment object.
+Body
+application/json
+responses
+/
+200
+id
+integer
+taskId
+integer
+createdDate
+string
+createdBy
+integer
+fileName
+string
+mimeType
+string
+Parameters
+LIST_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks/TASK_ID/attachments \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json'
+Response Example
+1
+{
+2
+  "id": 3,
+3
+  "taskId": 5,
+4
+  "createdDate": "2018-08-01T09:00:00Z",
+5
+  "createdBy": 27,
+6
+  "fileName": "Domo Validation.xlsx",
+7
+  "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+8
+}
+Download attachment
+GET
+https://api.domo.com
+/v1/projects/{PROJECT_ID}/lists/{LIST_ID}/tasks/{TASK_ID}/attachments/{ATTACHMENT_ID}
+Downloads an individual attachment given an attachment id.
+Request
+Path Parameters
+ATTACHMENT_ID
+string
+required
+The ID of the attachment
+LIST_ID
+string
+required
+The ID of the list
+PROJECT_ID
+string
+required
+The ID of the project
+TASK_ID
+string
+required
+The ID of the task
+Responses
+200
+Returns the downloaded bytes of the attachment on the response body.
+Parameters
+ATTACHMENT_ID*
+:
+LIST_ID*
+:
+PROJECT_ID*
+:
+TASK_ID*
+:
+Send API Request
+Request Sample: Shell / cURL
+curl --request GET \
+  --url https://api.domo.com/v1/projects/PROJECT_ID/lists/LIST_ID/tasks/TASK_ID/attachments/ATTACHMENT_ID

@@ -1,0 +1,261 @@
+Simple API
+Export
+v1.0
+API Base URL
+Domo API:https://api.domo.com
+Security
+Bearer Auth
+Provide your bearer token in the Authorization header when making requests to protected resources.
+Example: Authorization: Bearer 123
+The Simple API allows you to create new DataSets and import JSON data into them.
+Create DataSet
+POST
+https://api.domo.com
+/v1/json
+Creates a new DataSet in your Domo instance. Once the DataSet has been created, data can then be imported into the DataSet.
+Request
+Security: Bearer Auth
+Query Parameters
+description
+string
+Description of DataSet to create
+name
+string
+required
+Name of the DataSet to create
+Body
+application/json
+name
+string
+description
+string
+Responses
+201
+Created — Body contains the details of the created DataSet
+Body
+application/json
+responses
+/
+201
+id
+string
+The DataSet id
+name
+string
+The DataSet name
+description
+string
+The description of the DataSet
+rows
+integer
+columns
+integer
+owner
+object
+id
+integer
+name
+string
+createdAt
+string
+updatedAt
+string
+pdpEnabled
+boolean
+Personalized Data Permissions enabled
+policies
+array[object]
+id
+integer
+type
+string
+Example:
+open
+name
+string
+Example:
+All Rows
+filters
+array[object]
+users
+array[object]
+virtualUsers
+array[object]
+groups
+array[object]
+Auth
+Token
+:
+Parameters
+name*
+:
+description
+:
+Body
+{
+  "name": "Leonhard Euler Party",
+  "description": "Mathematician Guest List"
+}
+1
+{
+2
+  "name": "Leonhard Euler Party",
+3
+  "description": "Mathematician Guest List"
+4
+}
+Send API Request
+Request Sample: Shell / cURL
+curl --request POST \
+  --url https://api.domo.com/v1/json \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "name": "Leonhard Euler Party",
+  "description": "Mathematician Guest List"
+}'
+Response Example
+1
+{
+2
+  "id": "4405ff58-1957-45f0-82bd-914d989a3ea3",
+3
+  "name": "Leonhard Euler Party",
+4
+  "description": "Mathematician Guest List",
+5
+  "rows": 0,
+6
+  "columns": 0,
+7
+  "owner": {
+8
+    "id": 540824232,
+9
+    "name": "John Smith"
+10
+  },
+11
+  "createdAt": "2025-04-21T17:20:36Z",
+12
+  "updatedAt": "2025-04-21T17:20:36Z",
+13
+  "pdpEnabled": false,
+14
+  "policies": [
+15
+    {
+16
+      "id": 622387,
+17
+      "type": "open",
+18
+      "name": "All Rows",
+19
+      "filters": [],
+20
+      "users": [],
+21
+      "virtualUsers": [],
+22
+      "groups": []
+23
+    }
+24
+  ]
+25
+}
+Import data into DataSet
+PUT
+https://api.domo.com
+/v1/json/{DATASET_ID}/data
+Imports data into an already existing DataSet in your Domo instance.
+Request
+Security: Bearer Auth
+Path Parameters
+DATASET_ID
+string
+required
+The ID of the DataSet to import the data into
+Query Parameters
+updateMethod
+string
+Specifies how the data import should update the DataSet.Show all...
+Allowed values:
+REPLACE
+APPEND
+Default:
+REPLACE
+Body
+application/json
+An array of JSON objects which will be converted to CSV and stored as data.
+If you want to pass CSV directly, use the DataSet API.
+If appending, the schema must match the existing schema. To omit a field, specify the key but use an empty string or null for the value (see Example 2).
+If replacing, some objects can be missing properties that others have, resulting in empty fields (see Example 3).
+If your objects contain array values, they will appear as "List" in the DataSet. Consider converting them to properties or, alternatively, you can leverage one of Domo's many JSON connectors to more flexibly deal with arrays.
+array of:
+Responses
+204
+400
+401
+403
+Success! Returns an empty response body.
+Auth
+Token
+:
+Parameters
+DATASET_ID*
+:
+updateMethod
+:
+select an option
+Body
+Examples
+[
+  {
+    "Friend": "John",
+    "Attending": "false"
+  },
+  {
+    "Friend": "Jane",
+    "Attending": "true"
+  }
+]
+1
+[
+2
+  {
+3
+    "Friend": "John",
+4
+    "Attending": "false"
+5
+  },
+6
+  {
+7
+    "Friend": "Jane",
+8
+    "Attending": "true"
+9
+  }
+10
+]
+Send API Request
+Request Sample: Shell / cURL
+curl --request PUT \
+  --url https://api.domo.com/v1/json/DATASET_ID/data \
+  --header 'Accept: text/plain, application/json' \
+  --header 'Authorization: Bearer undefined' \
+  --header 'Content-Type: application/json' \
+  --data '[
+  {
+    "Friend": "John",
+    "Attending": "false"
+  },
+  {
+    "Friend": "Jane",
+    "Attending": "true"
+  }
+]'
